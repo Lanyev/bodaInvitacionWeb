@@ -216,7 +216,7 @@ function App() {
       </AnimatePresence>
 
       <main>
-        <section id="inicio" className="hero">
+        <section id="inicio" className="hero" style={{ '--hero-bg': `url('${wedding.hero.image}')` } as React.CSSProperties}>
           <motion.div className="hero__content" style={{ y: reduce ? 0 : heroParallax }} initial="hidden" animate="show" variants={stagger}>
             <motion.div className="hero__kicker" variants={fadeUp}>Con alegría anunciamos</motion.div>
             <motion.h1 variants={stagger} initial="hidden" animate="show" className="hero__names">
@@ -363,7 +363,7 @@ function App() {
 
         {wedding.sections.location && (
           <motion.section className="location" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={stagger}>
-            <motion.div className="location__image" role="img" aria-label="Paisaje del lugar de la celebración" variants={softFade} />
+            <motion.div className="location__image" role="img" aria-label="Paisaje del lugar de la celebración" style={{ '--location-bg': `url('${wedding.location.image}')` } as React.CSSProperties} variants={softFade} />
             <div className="location__content">
               <motion.div variants={fadeUp}><SectionTitle eyebrow="Nos encontraremos en">El lugar</SectionTitle></motion.div>
               <motion.h3 variants={fadeUp}>{wedding.event.venue}</motion.h3>

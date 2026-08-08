@@ -1,7 +1,11 @@
+const base = import.meta.env.BASE_URL
+
 export type WeddingConfig = {
   couple: { partnerOne: string; partnerTwo: string; monogram: string; tagline: string }
   event: { dateLabel: string; isoDate: string; ceremony: string; reception: string; venue: string; address: string; mapsUrl: string }
   story: { eyebrow: string; title: string; paragraphs: string[]; image: string }
+  hero: { image: string }
+  location: { image: string }
   program: { time: string; title: string; description: string }[]
   music: { enabled: boolean; title: string; artist: string; src: string }
   gallery: { src: string; alt: string; size: 'wide' | 'tall' | 'standard' }[]
@@ -31,13 +35,19 @@ export const wedding: WeddingConfig = {
       'Después de tantos caminos compartidos, queremos celebrar el comienzo de una nueva etapa rodeados de las personas que más queremos.',
       'Tu presencia hará que este día sea todavía más especial.',
     ],
-    image: '/images/story.jpg',
+    image: `${base}images/story.jpg`,
+  },
+  hero: {
+    image: `${base}images/hero.jpg`,
+  },
+  location: {
+    image: `${base}images/venue.jpg`,
   },
   music: {
     enabled: true,
     title: 'Una canción para nosotros',
     artist: 'Música ambiental',
-    src: '/music/wedding-song.mp3',
+    src: `${base}music/wedding-song.mp3`,
   },
   program: [
     { time: '17:00', title: 'Ceremonia', description: 'Un sí para toda la vida.' },
@@ -46,12 +56,12 @@ export const wedding: WeddingConfig = {
     { time: '21:00', title: 'Primer baile', description: 'La canción que cuenta nuestra historia.' },
   ],
   gallery: [
-    { src: '/images/gallery-01.jpg', alt: 'Pareja caminando en un paisaje natural', size: 'standard' },
-    { src: '/images/gallery-02.jpg', alt: 'Novios con globos junto a la alberca', size: 'standard' },
-    { src: '/images/gallery-03.jpg', alt: 'Manos de una pareja', size: 'standard' },
-    { src: '/images/gallery-04.jpg', alt: 'Pareja en un entorno campestre', size: 'standard' },
-    { src: '/images/gallery-05.jpg', alt: 'Flores claras sobre una mesa', size: 'standard' },
-    { src: '/images/gallery-06.jpg', alt: 'Anillos de boda sobre una mesa', size: 'standard' },
+    { src: `${base}images/gallery-01.jpg`, alt: 'Pareja caminando en un paisaje natural', size: 'standard' },
+    { src: `${base}images/gallery-02.jpg`, alt: 'Novios con globos junto a la alberca', size: 'standard' },
+    { src: `${base}images/gallery-03.jpg`, alt: 'Manos de una pareja', size: 'standard' },
+    { src: `${base}images/gallery-04.jpg`, alt: 'Pareja en un entorno campestre', size: 'standard' },
+    { src: `${base}images/gallery-05.jpg`, alt: 'Flores claras sobre una mesa', size: 'standard' },
+    { src: `${base}images/gallery-06.jpg`, alt: 'Anillos de boda sobre una mesa', size: 'standard' },
   ],
   sections: { story: true, countdown: true, events: true, program: true, gallery: true, rsvp: true, location: true },
 }
