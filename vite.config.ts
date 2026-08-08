@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react'
 // If hosting on a custom domain or at the root of a user/org page, set to '/'.
 export default defineConfig({
   plugins: [react()],
-  base: '/invitacion-boda/',
+  base: '/bodaInvitacionWeb/',
   server: {
     host: true,
     watch: {

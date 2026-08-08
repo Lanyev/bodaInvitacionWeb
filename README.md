@@ -28,12 +28,12 @@ npm run preview    # sirve dist/ localmente
 
 El proyecto se publica automáticamente en GitHub Pages cada vez que haces push a `main`.
 
-1. Crea el repositorio en GitHub con el nombre `invitacion-boda` (u otro, pero entonces actualiza `base` en `vite.config.ts`).
+1. Crea el repositorio en GitHub (en este caso ya existe como `bodaInvitacionWeb`).
 2. Empuja el código a la rama `main`.
 3. En GitHub, ve a **Settings → Pages** y selecciona **GitHub Actions** como fuente.
 4. El workflow en `.github/workflows/deploy.yml` se encargará del build y despliegue.
 
-URL resultante: `https://<usuario>.github.io/invitacion-boda/`
+URL resultante: `https://Lanyev.github.io/bodaInvitacionWeb/`
 
 ### Si el repositorio cambia de nombre
 
