@@ -8,6 +8,7 @@ export type WeddingConfig = {
   location: { image: string }
   program: { time: string; title: string; description: string }[]
   music: { enabled: boolean; title: string; artist: string; src: string }
+  rsvp: { whatsapp: string; messenger: string }
   gallery: { src: string; alt: string; size: 'wide' | 'tall' | 'standard' }[]
   sections: { story: boolean; countdown: boolean; events: boolean; program: boolean; gallery: boolean; rsvp: boolean; location: boolean }
 }
@@ -63,5 +64,9 @@ export const wedding: WeddingConfig = {
     { src: `${base}images/gallery-05.jpg`, alt: 'Flores claras sobre una mesa', size: 'standard' },
     { src: `${base}images/gallery-06.jpg`, alt: 'Anillos de boda sobre una mesa', size: 'standard' },
   ],
+  rsvp: {
+    whatsapp: '6563655560',
+    messenger: 'Lanyev',
+  },
   sections: { story: true, countdown: true, events: true, program: true, gallery: true, rsvp: true, location: true },
 }

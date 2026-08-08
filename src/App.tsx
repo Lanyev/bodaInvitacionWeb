@@ -88,6 +88,7 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [lightbox, setLightbox] = useState<number | null>(null)
   const [submitted, setSubmitted] = useState(false)
+  const [channel, setChannel] = useState<'whatsapp' | 'messenger'>('whatsapp')
   const [musicPlaying, setMusicPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
   const reduce = useReducedMotion()
@@ -118,6 +119,28 @@ function App() {
   }
 
   const galleryItem = lightbox === null ? null : wedding.gallery[lightbox]
+
+  const handleRsvpSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+    const name = String(formData.get('name') ?? '').trim()
+    const attendance = String(formData.get('attendance') ?? 'yes')
+    const guests = String(formData.get('guests') ?? '2')
+    const message = String(formData.get('message') ?? '').trim()
+    const attendanceLabel = attendance === 'yes' ? 'Sí, ahí estaremos' : 'No podremos acompañarlos'
+    const lines = [
+      `¡Hola! Soy ${name || '—'}.`,
+      `Confirmación: ${attendanceLabel}.`,
+      `Número de invitados: ${guests}.`,
+      message ? `Mensaje: ${message}` : '',
+    ].filter(Boolean)
+    const text = encodeURIComponent(lines.join('\n'))
+    const url = channel === 'whatsapp'
+      ? `https://wa.me/${wedding.rsvp.whatsapp}?text=${text}`
+      : `https://m.me/${wedding.rsvp.messenger}?text=${text}`
+    setSubmitted(true)
+    window.open(url, '_blank', 'noopener,noreferrer')
+  }
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -336,23 +359,38 @@ function App() {
         {wedding.sections.rsvp && (
           <motion.section id="rsvp" className="section section--paper" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={stagger}>
             <div className="container rsvp">
-              <motion.div variants={fadeUp}><SectionTitle eyebrow="¿Nos acompañas?">Tu presencia es nuestro mejor regalo</SectionTitle></motion.div>
-              <motion.p className="section-copy" variants={fadeUp}>Ayúdanos a preparar este día confirmando tu asistencia.</motion.p>
+              <motion.div className="rsvp__intro" variants={fadeUp}>
+                <SectionTitle eyebrow="¿Nos acompañas?">Tu presencia es nuestro mejor regalo</SectionTitle>
+                <p className="section-copy">Ayúdanos a preparar este día confirmando tu asistencia.</p>
+              </motion.div>
               <motion.form
                 className="form"
-                onSubmit={(event: FormEvent<HTMLFormElement>) => { event.preventDefault(); setSubmitted(true) }}
+                onSubmit={handleRsvpSubmit}
                 variants={fadeUp}
               >
                 <label>Nombre<input required name="name" placeholder="Tu nombre" /></label>
                 <label>Asistencia<select name="attendance" defaultValue="yes"><option value="yes">Sí, ahí estaremos</option><option value="no">No podremos acompañarlos</option></select></label>
                 <label>Número de invitados<select name="guests" defaultValue="2"><option>1</option><option>2</option><option>3</option><option>4</option></select></label>
                 <label>Mensaje<textarea name="message" placeholder="Un mensaje para los novios (opcional)" /></label>
+                <fieldset className="form__channel">
+                  <legend>Enviar por</legend>
+                  <label className={`form__channel-option ${channel === 'whatsapp' ? 'is-selected' : ''}`}>
+                    <input type="radio" name="channel" value="whatsapp" checked={channel === 'whatsapp'} onChange={() => setChannel('whatsapp')} />
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01Zm-7.01 15.24h-.01a8.23 8.23 0 0 1-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.23 8.23 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.42 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.51-6.16c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.56.12-.16.25-.64.8-.79.96-.15.16-.29.18-.54.06-.25-.12-1.04-.38-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.49-.41-.42-.56-.43h-.48c-.16 0-.43.06-.66.31-.23.25-.86.84-.86 2.06s.89 2.39 1.01 2.55c.12.16 1.74 2.66 4.22 3.73.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.18-.48-.31Z"/></svg>
+                    <span>WhatsApp</span>
+                  </label>
+                  <label className={`form__channel-option ${channel === 'messenger' ? 'is-selected' : ''}`}>
+                    <input type="radio" name="channel" value="messenger" checked={channel === 'messenger'} onChange={() => setChannel('messenger')} />
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.16 2 11.3c0 2.93 1.45 5.54 3.7 7.23V22l3.36-1.85c.9.25 1.85.38 2.84.38h.1c5.52 0 10-4.16 10-9.3S17.52 2 12 2Zm1.04 12.46-2.55-2.72-4.97 2.72 5.46-5.78 2.6 2.72 4.92-2.72-5.46 5.78Z"/></svg>
+                    <span>Messenger</span>
+                  </label>
+                </fieldset>
                 <AnimatePresence mode="wait" initial={false}>
                   {submitted ? (
-                    <motion.p key="thanks" className="form__message" role="status" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>¡Gracias! Tu confirmación de prueba quedó registrada visualmente.</motion.p>
+                    <motion.p key="thanks" className="form__message" role="status" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>¡Gracias! Abriendo {channel === 'whatsapp' ? 'WhatsApp' : 'Messenger'} para enviar tu confirmación…</motion.p>
                   ) : (
                     <motion.button key="submit" className="button" type="submit" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} whileHover={reduce ? undefined : { y: -2 }} whileTap={reduce ? undefined : { scale: 0.98 }}>
-                      Confirmar asistencia
+                      Enviar confirmación
                     </motion.button>
                   )}
                 </AnimatePresence>
