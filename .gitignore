@@ -1,0 +1,21 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+.vscode/
+
+# TypeScript build artifacts
+*.tsbuildinfo
+
+# Vite plugin artifacts
+vite.config.d.ts
+vite.config.js
+
+# Reference material — private to the project, not for GitHub
+referencia/
+
+# OS
+Thumbs.db
