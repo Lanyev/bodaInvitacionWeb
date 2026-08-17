@@ -11,7 +11,9 @@ export type WeddingConfig = {
   music: { enabled: boolean; title: string; artist: string; src: string }
   rsvp: { whatsapp: string; messenger: string }
   gallery: { src: string; alt: string; size: 'wide' | 'tall' | 'standard' }[]
-  sections: { story: boolean; countdown: boolean; events: boolean; program: boolean; gallery: boolean; rsvp: boolean; location: boolean }
+  nav: { href: string; label: string; mobileLabel?: string; section?: keyof WeddingConfig['sections'] }[]
+  credits: { author: string; role: string; email: string; copyrightYear: number; legalNotice: string }
+  sections: { story: boolean; countdown: boolean; events: boolean; program: boolean; gallery: boolean; rsvp: boolean; location: boolean; bienvenida: boolean }
 }
 
 export const wedding: WeddingConfig = {
@@ -54,9 +56,9 @@ export const wedding: WeddingConfig = {
   },
   music: {
     enabled: true,
-    title: 'Una canción para nosotros',
-    artist: 'Música ambiental',
-    src: `${base}music/wedding-song.mp3`,
+    title: 'De Uno Y De Todos Los Modos',
+    artist: 'Palomo',
+    src: `${base}music/de-uno-y-de-todos-los-modos.mp3`,
   },
   program: [
     { time: '21:00', title: 'Ceremonia', description: 'Un sí para toda la vida.' },
@@ -76,5 +78,21 @@ export const wedding: WeddingConfig = {
     whatsapp: '6563655560',
     messenger: 'Lanyev',
   },
-  sections: { story: true, countdown: true, events: true, program: false, gallery: true, rsvp: false, location: true },
+  nav: [
+    { href: '#bienvenida', label: 'Bienvenida', mobileLabel: 'Inicio', section: 'bienvenida' },
+    { href: '#historia', label: 'Historia', section: 'story' },
+    { href: '#evento', label: 'Evento', section: 'events' },
+    { href: '#programa', label: 'Programa', section: 'program' },
+    { href: '#galeria', label: 'Galería', section: 'gallery' },
+    { href: '#ubicacion', label: 'Ubicación', section: 'location' },
+    { href: '#rsvp', label: 'RSVP', section: 'rsvp' },
+  ],
+  credits: {
+    author: 'Alan · Desarrollo web',
+    role: 'Diseño y desarrollo',
+    email: 'contacto@ejemplo.com',
+    copyrightYear: 2026,
+    legalNotice: 'Esta obra se encuentra en proceso de desarrollo. Queda prohibida la reproducción total o parcial, por cualquier medio, sin autorización expresa y por escrito del autor.',
+  },
+  sections: { bienvenida: true, story: true, countdown: true, events: true, program: false, gallery: true, rsvp: false, location: true },
 }

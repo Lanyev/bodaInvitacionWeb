@@ -2,7 +2,10 @@ import { motion, useScroll, useTransform, useReducedMotion, AnimatePresence, typ
 import { useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { CalendarDays, ChevronLeft, ChevronRight, Clock3, MapPin, Menu, Music, Pause, X } from 'lucide-react'
 import { wedding } from './data/wedding'
+import { applyPalette, defaultPalette, palettes, type Palette } from './data/palettes'
+import PaletteSwitcher from './components/PaletteSwitcher'
 import './styles/theme.css'
+import './styles/palette-switcher.css'
 
 type Remaining = { days: number; hours: number; minutes: number; seconds: number }
 
@@ -90,6 +93,11 @@ function App() {
   const [submitted, setSubmitted] = useState(false)
   const [channel, setChannel] = useState<'whatsapp' | 'messenger'>('whatsapp')
   const [musicPlaying, setMusicPlaying] = useState(false)
+  const [palette, setPalette] = useState<Palette>(() => {
+    if (typeof window === 'undefined') return defaultPalette
+    const stored = window.localStorage.getItem('wedding-palette')
+    return palettes.find((item) => item.id === stored) ?? defaultPalette
+  })
   const audioRef = useRef<HTMLAudioElement>(null)
   const reduce = useReducedMotion()
   const compact = useScrolledPast(420)
@@ -97,6 +105,10 @@ function App() {
   const heroParallax = useTransform(scrollYProgress, [0, 0.3], [0, 80])
 
   const countdown = useCountdown(wedding.event.isoDate)
+  const visibleNav = useMemo(
+    () => wedding.nav.filter((item) => !item.section || wedding.sections[item.section]),
+    [],
+  )
   const toggleMusic = async () => {
     if (!audioRef.current) return
     if (musicPlaying) {
@@ -166,6 +178,17 @@ function App() {
     observer.disconnect()
   }, [reduce])
 
+  useEffect(() => {
+    applyPalette(palette)
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('wedding-palette', palette.id)
+    }
+  }, [palette])
+
+  const handlePaletteSelect = (next: Palette) => {
+    setPalette(next)
+  }
+
   return (
     <motion.div className="page" initial={reduce ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2, ease: EASE }}>
       <motion.div className="shimmer" initial={{ opacity: 0 }} animate={{ opacity: reduce ? 0 : 0.85 }} transition={{ duration: 2.4, delay: 0.5, ease: EASE }} />
@@ -174,11 +197,9 @@ function App() {
         <div className="container header__inner">
           <a className="monogram" href="#inicio" aria-label="Volver al inicio">{wedding.couple.monogram}</a>
           <nav className="nav" aria-label="Navegación principal">
-            <a href="#historia" onClick={() => setMenuOpen(false)}>Historia</a>
-            <a href="#evento" onClick={() => setMenuOpen(false)}>Evento</a>
-            <a href="#programa" onClick={() => setMenuOpen(false)}>Programa</a>
-            <a href="#galeria" onClick={() => setMenuOpen(false)}>Galería</a>
-            <a href="#rsvp" onClick={() => setMenuOpen(false)}>RSVP</a>
+            {visibleNav.map((item) => (
+              <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>{item.label}</a>
+            ))}
           </nav>
           <button className="menu-button" aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>
             <AnimatePresence mode="wait" initial={false}>
@@ -218,21 +239,20 @@ function App() {
               animate="show"
               variants={stagger}
             >
-              {[
-                { href: '#historia', label: 'Historia' },
-                { href: '#evento', label: 'Evento' },
-                { href: '#programa', label: 'Programa' },
-                { href: '#galeria', label: 'Galería' },
-                { href: '#rsvp', label: 'RSVP' },
-              ].map((item, index) => (
+              {visibleNav.map((item, index) => (
                 <motion.li key={item.href} variants={fadeUp}>
-                  <a href={item.href} data-index={`0${index + 1}`} onClick={() => setMenuOpen(false)}>{item.label}</a>
+                  <a href={item.href} data-index={`0${index + 1}`} onClick={() => setMenuOpen(false)}>
+                    <span className="menu-overlay__label">{item.mobileLabel ?? item.label}</span>
+                    <span className="menu-overlay__hint">{item.label}</span>
+                  </a>
                 </motion.li>
               ))}
             </motion.ul>
             <div className="menu-overlay__foot">
-              <span>{wedding.event.dateLabel}</span>
-              <span>{wedding.event.venue}</span>
+              <div className="menu-overlay__foot-info">
+                <span>{wedding.event.dateLabel}</span>
+                <strong>{wedding.event.venue}</strong>
+              </div>
             </div>
           </motion.div>
         )}
@@ -408,7 +428,7 @@ function App() {
         )}
 
         {wedding.sections.location && (
-          <motion.section className="location" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={stagger}>
+          <motion.section id="ubicacion" className="location" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={stagger}>
             <motion.div className="location__image" role="img" aria-label="Paisaje del lugar de la celebración" style={{ '--location-bg': `url('${wedding.location.image}')` } as React.CSSProperties} variants={softFade} />
             <div className="location__content">
               <motion.div variants={fadeUp}><SectionTitle eyebrow="Nos encontraremos en">El lugar</SectionTitle></motion.div>
@@ -481,6 +501,8 @@ function App() {
         </motion.div>
       )}
 
+      <PaletteSwitcher current={palette} onSelect={handlePaletteSelect} />
+
       <motion.footer
         className="footer"
         initial="hidden"
@@ -491,6 +513,34 @@ function App() {
         <motion.div className="footer__names" variants={fadeUp}>{wedding.couple.partnerOne} &amp; {wedding.couple.partnerTwo}</motion.div>
         <motion.p variants={fadeUp}>Gracias por formar parte de nuestra historia.</motion.p>
       </motion.footer>
+
+      <motion.aside
+        className="credits"
+        aria-label="Aviso legal y créditos"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{ duration: 0.8, ease: EASE }}
+      >
+        <div className="container credits__inner">
+          <div className="credits__col">
+            <span className="credits__eyebrow">Créditos</span>
+            <p className="credits__line">
+              <strong>{wedding.credits.author}</strong>
+              <span aria-hidden="true"> · </span>
+              <span>{wedding.credits.role}</span>
+            </p>
+            <a className="credits__email" href={`mailto:${wedding.credits.email}`}>
+              {wedding.credits.email}
+            </a>
+          </div>
+          <div className="credits__col credits__col--legal">
+            <span className="credits__eyebrow">Aviso legal</span>
+            <p className="credits__legal">{wedding.credits.legalNotice}</p>
+            <p className="credits__copy">© {wedding.credits.copyrightYear} {wedding.credits.author}. Todos los derechos reservados.</p>
+          </div>
+        </div>
+      </motion.aside>
 
       <AnimatePresence>
         {galleryItem && (
