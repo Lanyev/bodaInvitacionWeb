@@ -9,11 +9,10 @@ export type WeddingConfig = {
   location: { image: string }
   program: { time: string; title: string; description: string }[]
   music: { enabled: boolean; title: string; artist: string; src: string }
-  rsvp: { whatsapp: string; messenger: string }
   gallery: { src: string; alt: string; size: 'wide' | 'tall' | 'standard' }[]
   nav: { href: string; label: string; mobileLabel?: string; section?: keyof WeddingConfig['sections'] }[]
   credits: { author: string; role: string; email: string; copyrightYear: number; legalNotice: string }
-  sections: { story: boolean; countdown: boolean; events: boolean; program: boolean; gallery: boolean; rsvp: boolean; location: boolean; bienvenida: boolean }
+  sections: { story: boolean; countdown: boolean; events: boolean; program: boolean; gallery: boolean; location: boolean; bienvenida: boolean }
 }
 
 export const wedding: WeddingConfig = {
@@ -74,10 +73,6 @@ export const wedding: WeddingConfig = {
     { src: `${base}images/gallery-05.jpg`, alt: 'Flores claras sobre una mesa', size: 'standard' },
     { src: `${base}images/gallery-06.jpg`, alt: 'Anillos de boda sobre una mesa', size: 'standard' },
   ],
-  rsvp: {
-    whatsapp: '6563655560',
-    messenger: 'Lanyev',
-  },
   nav: [
     { href: '#bienvenida', label: 'Bienvenida', mobileLabel: 'Inicio', section: 'bienvenida' },
     { href: '#historia', label: 'Historia', section: 'story' },
@@ -85,7 +80,6 @@ export const wedding: WeddingConfig = {
     { href: '#programa', label: 'Programa', section: 'program' },
     { href: '#galeria', label: 'Galería', section: 'gallery' },
     { href: '#ubicacion', label: 'Ubicación', section: 'location' },
-    { href: '#rsvp', label: 'RSVP', section: 'rsvp' },
   ],
   credits: {
     author: 'Alan Yeverino',
@@ -94,5 +88,5 @@ export const wedding: WeddingConfig = {
     copyrightYear: 2026,
     legalNotice: 'Esta obra se encuentra en proceso de desarrollo. Queda prohibida la reproducción total o parcial, por cualquier medio, sin autorización expresa y por escrito del autor.',
   },
-  sections: { bienvenida: true, story: true, countdown: true, events: true, program: false, gallery: true, rsvp: false, location: true },
+  sections: { bienvenida: true, story: true, countdown: true, events: true, program: false, gallery: true, location: true },
 }

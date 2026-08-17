@@ -1,12 +1,21 @@
 export type PaletteColors = {
-  paper: string
-  'paper-soft': string
-  ink: string
+  primary: string
+  'primary-hover': string
+  secondary: string
+  background: string
+  surface: string
+  text: string
   muted: string
-  green: string
-  'green-deep': string
-  'green-dark': string
-  sage: string
+  accent: string
+  'accent-text': string
+  button: string
+  'button-text': string
+  card: string
+  'card-text': string
+  'on-dark': string
+  'on-dark-muted': string
+  line: string
+  scrim: string
 }
 
 export type Palette = {
@@ -22,14 +31,23 @@ export const palettes: Palette[] = [
     name: 'Menta suave',
     accent: 'Equilibrado y luminoso',
     colors: {
-      paper: '#ffffff',
-      'paper-soft': '#f4faf6',
-      ink: '#2d4a3a',
-      muted: '#6b8074',
-      green: '#9ec9b0',
-      'green-deep': '#7fb591',
-      'green-dark': '#4f7a60',
-      sage: '#b8d6c2',
+      primary: '#2F5D43',
+      'primary-hover': '#244A36',
+      secondary: '#4A6657',
+      background: '#FFFFFF',
+      surface: '#F3F7F4',
+      text: '#1F3329',
+      muted: '#4F6258',
+      accent: '#B7D3C1',
+      'accent-text': '#183123',
+      button: '#477158',
+      'button-text': '#FFFFFF',
+      card: '#FFFFFF',
+      'card-text': '#1F3329',
+      'on-dark': '#FFFFFF',
+      'on-dark-muted': '#E8F0EB',
+      line: '#9FB3A7',
+      scrim: '#14271D',
     },
   },
   {
@@ -37,14 +55,23 @@ export const palettes: Palette[] = [
     name: 'Salvia romántica',
     accent: 'Tonos grisáceos y sofisticados',
     colors: {
-      paper: '#fbfdfb',
-      'paper-soft': '#f1f6f1',
-      ink: '#3a5048',
-      muted: '#6f7d72',
-      green: '#b0c9b6',
-      'green-deep': '#8fa897',
-      'green-dark': '#5c7460',
-      sage: '#cad9ce',
+      primary: '#405C4B',
+      'primary-hover': '#314A39',
+      secondary: '#526458',
+      background: '#FBFDFB',
+      surface: '#F0F5F1',
+      text: '#293A31',
+      muted: '#526158',
+      accent: '#C1D3C6',
+      'accent-text': '#2E4036',
+      button: '#526A5C',
+      'button-text': '#FFFFFF',
+      card: '#FFFFFF',
+      'card-text': '#293A31',
+      'on-dark': '#FFFFFF',
+      'on-dark-muted': '#ECF2EE',
+      line: '#AAB7AE',
+      scrim: '#17251D',
     },
   },
   {
@@ -52,14 +79,23 @@ export const palettes: Palette[] = [
     name: 'Menta claro',
     accent: 'Fresco, vibrante y juvenil',
     colors: {
-      paper: '#ffffff',
-      'paper-soft': '#f8fcf9',
-      ink: '#1f3a2d',
-      muted: '#60806d',
-      green: '#aedcc1',
-      'green-deep': '#86c5a3',
-      'green-dark': '#447658',
-      sage: '#c4e3d2',
+      primary: '#245B3A',
+      'primary-hover': '#19482C',
+      secondary: '#426951',
+      background: '#FFFFFF',
+      surface: '#EDF6F0',
+      text: '#193326',
+      muted: '#466555',
+      accent: '#B8DCC5',
+      'accent-text': '#163A25',
+      button: '#3D7851',
+      'button-text': '#FFFFFF',
+      card: '#FFFFFF',
+      'card-text': '#193326',
+      'on-dark': '#FFFFFF',
+      'on-dark-muted': '#E7F1EA',
+      line: '#9EB9A7',
+      scrim: '#10281B',
     },
   },
   {
@@ -67,14 +103,23 @@ export const palettes: Palette[] = [
     name: 'Bosque sereno',
     accent: 'Profundo y natural',
     colors: {
-      paper: '#fdfdfb',
-      'paper-soft': '#f3f7f1',
-      ink: '#2c4233',
-      muted: '#5e7268',
-      green: '#94bea3',
-      'green-deep': '#729d83',
-      'green-dark': '#3d5f4c',
-      sage: '#b5d0bc',
+      primary: '#315842',
+      'primary-hover': '#254635',
+      secondary: '#4A6654',
+      background: '#FDFDFB',
+      surface: '#EFF4EF',
+      text: '#21362A',
+      muted: '#4B5F53',
+      accent: '#B7CEBA',
+      'accent-text': '#263B2D',
+      button: '#456C51',
+      'button-text': '#FFFFFF',
+      card: '#FFFFFF',
+      'card-text': '#21362A',
+      'on-dark': '#FFFFFF',
+      'on-dark-muted': '#E8EFEA',
+      line: '#A1B0A6',
+      scrim: '#102119',
     },
   },
   {
@@ -82,14 +127,23 @@ export const palettes: Palette[] = [
     name: 'Eucalipto fresco',
     accent: 'Subtono azul, elegante',
     colors: {
-      paper: '#ffffff',
-      'paper-soft': '#f2f8f4',
-      ink: '#2d4a45',
-      muted: '#6a8078',
-      green: '#9fcabd',
-      'green-deep': '#7ab19e',
-      'green-dark': '#4a7163',
-      sage: '#bcdcd0',
+      primary: '#315D51',
+      'primary-hover': '#24483F',
+      secondary: '#4B695F',
+      background: '#FFFFFF',
+      surface: '#EFF5F2',
+      text: '#203A34',
+      muted: '#50665F',
+      accent: '#BBD8D0',
+      'accent-text': '#214038',
+      button: '#477165',
+      'button-text': '#FFFFFF',
+      card: '#FFFFFF',
+      'card-text': '#203A34',
+      'on-dark': '#FFFFFF',
+      'on-dark-muted': '#E8F0ED',
+      line: '#A0B4AE',
+      scrim: '#11251F',
     },
   },
   {
@@ -97,14 +151,23 @@ export const palettes: Palette[] = [
     name: 'Verde crema',
     accent: 'Cálido y delicado',
     colors: {
-      paper: '#fefefe',
-      'paper-soft': '#f6f8f1',
-      ink: '#384a38',
-      muted: '#7a8676',
-      green: '#b4cf9d',
-      'green-deep': '#94b783',
-      'green-dark': '#5a7050',
-      sage: '#cddcb8',
+      primary: '#445E39',
+      'primary-hover': '#354A2C',
+      secondary: '#55674A',
+      background: '#FEFEFE',
+      surface: '#F3F6ED',
+      text: '#2C3828',
+      muted: '#56614F',
+      accent: '#CBD9B5',
+      'accent-text': '#334526',
+      button: '#607A4D',
+      'button-text': '#FFFFFF',
+      card: '#FFFFFF',
+      'card-text': '#2C3828',
+      'on-dark': '#FFFFFF',
+      'on-dark-muted': '#EDF1E9',
+      line: '#B3BDA9',
+      scrim: '#1B2518',
     },
   },
 ]
@@ -115,7 +178,9 @@ export function applyPalette(palette: Palette) {
   if (typeof document === 'undefined') return
   const root = document.documentElement
   Object.entries(palette.colors).forEach(([key, value]) => {
-    root.style.setProperty(`--${key}`, value)
+    root.style.setProperty(`--color-${key}`, value)
   })
   root.dataset.theme = palette.id
+  root.style.colorScheme = 'light'
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', palette.colors.secondary)
 }
