@@ -88,9 +88,9 @@ export const wedding: WeddingConfig = {
     { href: '#rsvp', label: 'RSVP', section: 'rsvp' },
   ],
   credits: {
-    author: 'Alan · Desarrollo web',
+    author: 'Alan Yeverino',
     role: 'Diseño y desarrollo',
-    email: 'contacto@ejemplo.com',
+    email: 'Lanyev@gmail.com',
     copyrightYear: 2026,
     legalNotice: 'Esta obra se encuentra en proceso de desarrollo. Queda prohibida la reproducción total o parcial, por cualquier medio, sin autorización expresa y por escrito del autor.',
   },
