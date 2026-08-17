@@ -258,8 +258,8 @@ function App() {
         <motion.section id="bienvenida" className="section section--white intro" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={stagger}>
           <div className="container">
             <motion.div className="intro__ornament" variants={fadeUp}>✦</motion.div>
-            <motion.div variants={fadeUp}><SectionTitle eyebrow="Guarda la fecha">Hay momentos que merecen ser compartidos</SectionTitle></motion.div>
-            <motion.p className="section-copy" variants={fadeUp}>Nos encantaría contar contigo para celebrar el día en que nuestras historias se convierten en una sola.</motion.p>
+            <motion.div variants={fadeUp}><SectionTitle eyebrow="Guarda la fecha">Nos casamos</SectionTitle></motion.div>
+            <motion.p className="intro__lead section-copy" variants={fadeUp}>y queremos compartir contigo este día tan especial.</motion.p>
           </div>
         </motion.section>
 
@@ -270,6 +270,14 @@ function App() {
               <div className="story__text">
                 <motion.div variants={fadeUp}><SectionTitle eyebrow={wedding.story.eyebrow}>{wedding.story.title}</SectionTitle></motion.div>
                 <motion.div className="story__rule" variants={fadeUp} />
+                <motion.div className="parents" variants={fadeUp}>
+                  <span className="parents__eyebrow">Con la bendición de Dios y nuestros padres</span>
+                  <ul className="parents__list">
+                    <li><span>Mamá de la novia</span><strong>{wedding.parents.motherOfBride}</strong></li>
+                    <li><span>Papá del novio</span><strong>{wedding.parents.fatherOfGroom}</strong></li>
+                    <li><span>Mamá del novio</span><strong>{wedding.parents.motherOfGroom}</strong></li>
+                  </ul>
+                </motion.div>
                 {wedding.story.paragraphs.map((paragraph) => <motion.p className="section-copy" key={paragraph} variants={fadeUp}>{paragraph}</motion.p>)}
               </div>
             </div>
@@ -300,12 +308,12 @@ function App() {
                 <motion.article className="event-card" variants={fadeUp} whileHover={reduce ? undefined : { y: -6, boxShadow: '0 30px 80px rgba(65, 39, 26, .18)' }}>
                   <CalendarDays className="event-card__icon" />
                   <h3>{wedding.event.ceremony}</h3>
-                  <p>17:00 horas<br />{wedding.event.venue}<br />{wedding.event.address}</p>
+                  <p>21:00 horas<br />{wedding.event.venue}<br />{wedding.event.address}</p>
                 </motion.article>
                 <motion.article className="event-card" variants={fadeUp} whileHover={reduce ? undefined : { y: -6, boxShadow: '0 30px 80px rgba(65, 39, 26, .18)' }}>
                   <Clock3 className="event-card__icon" />
                   <h3>{wedding.event.reception}</h3>
-                  <p>18:30 horas<br />Cóctel de bienvenida y cena<br />Vestimenta: formal campestre</p>
+                  <p>{wedding.event.timeWindow}<br />Cóctel de bienvenida y cena<br />Vestimenta: {wedding.event.dressCode}</p>
                 </motion.article>
               </motion.div>
             </div>
@@ -406,6 +414,18 @@ function App() {
               <motion.div variants={fadeUp}><SectionTitle eyebrow="Nos encontraremos en">El lugar</SectionTitle></motion.div>
               <motion.h3 variants={fadeUp}>{wedding.event.venue}</motion.h3>
               <motion.p variants={fadeUp}><MapPin size={16} /> {wedding.event.address}</motion.p>
+              <motion.div className="location__map" variants={fadeUp}>
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d849.1374793291553!2d-106.42796378788579!3d31.646171484457906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86e75d0043482861%3A0x849f8c385a236583!2sJard%C3%ADn%20las%20palmas!5e0!3m2!1ses-419!2smx!4v1786944783046!5m2!1ses-419!2smx"
+                  width="600"
+                  height="450"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  title={`Mapa de ${wedding.event.venue}`}
+                />
+              </motion.div>
               <motion.a className="button" href={wedding.event.mapsUrl} target="_blank" rel="noreferrer" variants={fadeUp} whileHover={reduce ? undefined : { y: -2 }}>Cómo llegar</motion.a>
             </div>
           </motion.section>
@@ -419,7 +439,7 @@ function App() {
           animate={{
             y: 0,
             opacity: 1,
-            backgroundColor: compact ? 'rgba(255, 253, 248, 0)' : 'var(--paper-bright)',
+            backgroundColor: compact ? 'rgba(255, 255, 255, 0)' : 'var(--paper-bright)',
             boxShadow: compact ? '0 0 0 rgba(0,0,0,0)' : 'var(--shadow)',
             width: compact ? 44 : 'auto',
             height: compact ? 44 : 'auto',
@@ -438,7 +458,7 @@ function App() {
             onClick={toggleMusic}
             aria-label={musicPlaying ? 'Pausar música' : 'Reproducir música'}
             whileTap={reduce ? undefined : { scale: 0.92 }}
-            animate={musicPlaying && !reduce ? { boxShadow: ['0 0 0 0 rgba(156, 71, 47, .5)', '0 0 0 14px rgba(156, 71, 47, 0)'] } : { boxShadow: '0 0 0 0 rgba(156, 71, 47, 0)' }}
+            animate={musicPlaying && !reduce ? { boxShadow: ['0 0 0 0 rgba(127, 181, 145, .55)', '0 0 0 14px rgba(127, 181, 145, 0)'] } : { boxShadow: '0 0 0 0 rgba(127, 181, 145, 0)' }}
             transition={musicPlaying ? { repeat: Infinity, duration: 1.6 } : { duration: 0.4 }}
           >
             {musicPlaying ? <Pause size={16} /> : <Music size={16} />}
