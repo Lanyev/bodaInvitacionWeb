@@ -17,5 +17,8 @@ vite.config.js
 # Reference material — private to the project, not for GitHub
 referencia/
 
+# Images not currently referenced by the app (kept locally as backup, do not deploy)
+unused-images/
+
 # OS
 Thumbs.db
