@@ -3,9 +3,9 @@ const base = import.meta.env.BASE_URL
 export type WeddingConfig = {
   couple: { partnerOne: string; partnerTwo: string; monogram: string; tagline: string }
   event: { dateLabel: string; isoDate: string; ceremony: string; reception: string; venue: string; address: string; mapsUrl: string; dressCode: string; timeWindow: string }
-  story: { eyebrow: string; title: string; paragraphs: string[]; image: string }
+  story: { eyebrow: string; title: string; paragraphs: string[]; image: string; ringsImage: string }
   parents: { motherOfBride: string; fatherOfGroom: string; motherOfGroom: string }
-  hero: { images: string[] }
+  hero: { image: string }
   location: { image: string }
   program: { time: string; title: string; description: string }[]
   music: { enabled: boolean; title: string; artist: string; src: string }
@@ -41,6 +41,7 @@ export const wedding: WeddingConfig = {
       'Tu presencia hará que este día sea todavía más especial.',
     ],
     image: `${base}images/story.jpg`,
+    ringsImage: `${base}images/wedding-rings.jpg`,
   },
   parents: {
     motherOfBride: 'Maury Flores',
@@ -48,11 +49,7 @@ export const wedding: WeddingConfig = {
     motherOfGroom: 'Cindy Mireles',
   },
   hero: {
-    images: [
-      `${base}images/main-photo-01.jpg`,
-      `${base}images/main-photo-02.jpg`,
-      `${base}images/main-photo-03.jpg`,
-    ],
+    image: `${base}images/main-photo-01.jpg`,
   },
   location: {
     image: `${base}images/venue.jpg`,
@@ -74,8 +71,8 @@ export const wedding: WeddingConfig = {
     { src: `${base}images/gallery-02.jpg`, alt: 'Novios con globos junto a la alberca', size: 'standard' },
     { src: `${base}images/gallery-03.jpg`, alt: 'Manos de una pareja', size: 'standard' },
     { src: `${base}images/gallery-04.jpg`, alt: 'Pareja en un entorno campestre', size: 'standard' },
-    { src: `${base}images/gallery-05.jpg`, alt: 'Flores claras sobre una mesa', size: 'standard' },
-    { src: `${base}images/gallery-06.jpg`, alt: 'Anillos de boda sobre una mesa', size: 'standard' },
+    { src: `${base}images/gallery-new01.jpeg`, alt: 'Momento especial de la pareja', size: 'standard' },
+    { src: `${base}images/gallery-new02.jpeg`, alt: 'Momento especial de la pareja', size: 'standard' },
   ],
   nav: [
     { href: '#bienvenida', label: 'Bienvenida', mobileLabel: 'Inicio', section: 'bienvenida' },

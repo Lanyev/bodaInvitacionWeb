@@ -94,29 +94,6 @@ const character: Variants = {
   show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: EASE } },
 }
 
-type AmbientLayer = { duration: number; times: number[]; opacity: number[]; delay: number }
-
-const ambientLayers: AmbientLayer[] = [
-  {
-    duration: 16,
-    times: [0, 0.15, 0.3, 0.45, 0.6, 0.78, 1],
-    opacity: [0.92, 1, 0.85, 1, 0.95, 0.88, 1],
-    delay: 0,
-  },
-  {
-    duration: 19,
-    times: [0, 0.1, 0.22, 0.38, 0.5, 0.65, 0.78, 0.9, 1],
-    opacity: [0, 0.45, 0.1, 0.55, 0.2, 0.65, 0.15, 0.4, 0],
-    delay: 2.4,
-  },
-  {
-    duration: 23,
-    times: [0, 0.12, 0.26, 0.4, 0.55, 0.7, 0.85, 1],
-    opacity: [0, 0.3, 0.5, 0.15, 0.4, 0.08, 0.35, 0],
-    delay: 5.1,
-  },
-]
-
 function SplitTitle({ text, className }: { text: string; className?: string }) {
   const words = text.split(' ')
   return (
@@ -299,22 +276,7 @@ function App() {
       </AnimatePresence>
 
       <main>
-        <section id="inicio" className="hero">
-          <div className="hero__layers" aria-hidden="true">
-            {wedding.hero.images.map((src, index) => {
-              const cfg = ambientLayers[index] ?? ambientLayers[0]
-              return (
-                <motion.div
-                  key={src}
-                  className="hero__layer"
-                  style={{ backgroundImage: `url('${src}')` }}
-                  initial={{ opacity: index === 0 ? 1 : 0 }}
-                  animate={reduce ? { opacity: index === 0 ? 1 : 0 } : { opacity: cfg.opacity }}
-                  transition={reduce ? { duration: 0 } : { duration: cfg.duration, times: cfg.times, delay: cfg.delay, repeat: Infinity, ease: 'easeInOut' }}
-                />
-              )
-            })}
-          </div>
+        <section id="inicio" className="hero" style={{ '--hero-bg': `url('${wedding.hero.image}')` } as React.CSSProperties}>
           <motion.div className="hero__content" style={{ y: reduce ? 0 : heroParallax }} initial="hidden" animate="show" variants={stagger}>
             <motion.div className="hero__kicker" variants={fadeUp}>Con alegría anunciamos</motion.div>
             <motion.h1 variants={stagger} initial="hidden" animate="show" className="hero__names">
@@ -341,15 +303,11 @@ function App() {
         {wedding.sections.story && (
           <motion.section id="historia" className="section section--paper" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={stagger}>
             <div className="container story">
-              <motion.div className="story__image" role="img" aria-label="Fotografía de pareja en un paisaje campestre" style={{ backgroundImage: `url('${wedding.story.image}')` }} variants={fadeUp} />
               <div className="story__text">
                 <motion.div variants={fadeUp}><SectionTitle eyebrow={wedding.story.eyebrow}>{wedding.story.title}</SectionTitle></motion.div>
-                <motion.div className="story__rings" variants={fadeUp} aria-hidden="true">
-                  <svg viewBox="0 0 64 40" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round">
-                    <circle cx="24" cy="22" r="14" />
-                    <circle cx="40" cy="22" r="14" />
-                  </svg>
-                </motion.div>
+                <motion.figure className="story__rings" variants={fadeUp}>
+                  <img src={wedding.story.ringsImage} alt="Argollas de matrimonio" loading="lazy" />
+                </motion.figure>
                 <motion.div className="story__rule" variants={fadeUp} />
                 <motion.div className="parents" variants={fadeUp}>
                   <span className="parents__eyebrow">Con la bendición de Dios y nuestros padres</span>
