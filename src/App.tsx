@@ -324,7 +324,14 @@ function App() {
         )}
 
         {wedding.sections.countdown && (
-          <motion.section className="section countdown" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={stagger}>
+          <motion.section
+            className="section countdown"
+            style={{ '--countdown-overlay': `url('${import.meta.env.BASE_URL}images/herradura.png')` } as React.CSSProperties}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={stagger}
+          >
             <div className="container">
               <motion.div variants={fadeUp}><SectionTitle eyebrow="Faltan">Para nuestro gran día</SectionTitle></motion.div>
               <motion.div className="countdown__grid" variants={stagger}>

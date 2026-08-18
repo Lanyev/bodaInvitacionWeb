@@ -109,8 +109,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .parents__list span { color: var(--color-muted); font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; }
 .parents__list strong { color: var(--color-text); font-family: var(--display); font-size: 1.05rem; font-weight: 500; text-align: right; }
 
-.countdown { background: var(--color-primary); color: var(--color-on-dark); text-align: center; }
+.countdown { background: var(--color-primary); color: var(--color-on-dark); text-align: center; overflow: hidden; position: relative; }
+.countdown::after { content: ''; position: absolute; inset: 0; background: var(--countdown-overlay) center bottom 18%/contain no-repeat; pointer-events: none; opacity: .12; }
+.countdown > .container { position: relative; z-index: 1; }
 .countdown .eyebrow { color: var(--color-on-dark-muted); }
+.countdown .section-title, .countdown .section-title h2 { color: var(--color-on-dark); }
 .countdown__grid { display: grid; max-width: 700px; grid-template-columns: repeat(4, 1fr); margin: 40px auto 0; }
 .countdown__value { padding: 0 20px; border-right: 1px solid color-mix(in srgb, var(--color-on-dark) 38%, transparent); font-family: var(--display); font-size: clamp(2.5rem, 7vw, 5rem); line-height: .9; }
 .countdown__item:last-child .countdown__value { border-right: 0; }
