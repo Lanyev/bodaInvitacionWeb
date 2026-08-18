@@ -5,7 +5,7 @@ export type WeddingConfig = {
   event: { dateLabel: string; isoDate: string; ceremony: string; reception: string; venue: string; address: string; mapsUrl: string; dressCode: string; timeWindow: string }
   story: { eyebrow: string; title: string; paragraphs: string[]; image: string }
   parents: { motherOfBride: string; fatherOfGroom: string; motherOfGroom: string }
-  hero: { image: string }
+  hero: { images: string[] }
   location: { image: string }
   program: { time: string; title: string; description: string }[]
   music: { enabled: boolean; title: string; artist: string; src: string }
@@ -45,10 +45,14 @@ export const wedding: WeddingConfig = {
   parents: {
     motherOfBride: 'Maury Flores',
     fatherOfGroom: 'Fabian Castañeda',
-    motherOfGroom: 'Cindy Hieles',
+    motherOfGroom: 'Cindy Mireles',
   },
   hero: {
-    image: `${base}images/hero.jpg`,
+    images: [
+      `${base}images/main-photo-01.jpg`,
+      `${base}images/main-photo-02.jpg`,
+      `${base}images/main-photo-03.jpg`,
+    ],
   },
   location: {
     image: `${base}images/venue.jpg`,
