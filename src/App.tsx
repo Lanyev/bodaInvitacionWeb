@@ -53,6 +53,7 @@ function useCountdown(target: string): Remaining {
 }
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1]
+const WHATSAPP_COUNTRY_CODE = '52'
 
 function toGoogleCalendarDate(date: string) {
   return new Date(date).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')
@@ -225,7 +226,7 @@ function App() {
       `Número de invitados: ${guests}`,
       message ? `Mensaje: ${message}` : '',
     ].filter(Boolean)
-    const url = `https://wa.me/${wedding.rsvp.whatsapp}?text=${encodeURIComponent(lines.join('\n'))}`
+    const url = `https://wa.me/${WHATSAPP_COUNTRY_CODE}${wedding.rsvp.whatsapp}?text=${encodeURIComponent(lines.join('\n'))}`
     setRsvpSubmitted(true)
     window.open(url, '_blank', 'noopener,noreferrer')
   }
@@ -544,7 +545,7 @@ function App() {
                 </label>
                 <div className="form__contact">
                   <span className="form__contact-label">Se enviará a</span>
-                  <a className="form__contact-value" href={`https://wa.me/${wedding.rsvp.whatsapp}`} target="_blank" rel="noreferrer">
+                  <a className="form__contact-value" href={`https://wa.me/${WHATSAPP_COUNTRY_CODE}${wedding.rsvp.whatsapp}`} target="_blank" rel="noreferrer">
                     <MessageCircle size={16} aria-hidden="true" />
                     Fabian
                   </a>
