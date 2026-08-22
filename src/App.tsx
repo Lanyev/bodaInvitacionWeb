@@ -148,6 +148,11 @@ function App() {
   const compact = useScrolledPast(420)
   const { scrollYProgress } = useScroll()
   const heroParallax = useTransform(scrollYProgress, [0, 0.3], [0, 80])
+  const lightShiftFast = useTransform(scrollYProgress, [0, 1], [0, 160])
+  const lightShiftSlow = useTransform(scrollYProgress, [0, 1], [0, 70])
+  const lightSway = useTransform(scrollYProgress, [0, 0.5, 1], [0, -28, 0])
+  const lightSheenOpacity = useTransform(scrollYProgress, [0.08, 0.3, 0.7, 0.92], [0, 0.55, 0.55, 0])
+  const lightSheenY = useTransform(scrollYProgress, [0, 1], ['0%', '45%'])
 
   const countdown = useCountdown(wedding.event.isoDate)
   const visibleNav = useMemo(
@@ -258,7 +263,18 @@ function App() {
 
   return (
     <motion.div className="page" initial={reduce ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2, ease: EASE }}>
-      <motion.div className="shimmer" initial={{ opacity: 0 }} animate={{ opacity: reduce ? 0 : 0.85 }} transition={{ duration: 2.4, delay: 0.5, ease: EASE }} />
+      <motion.div className="shimmer" style={{ y: reduce ? 0 : lightShiftSlow }} initial={{ opacity: 0 }} animate={{ opacity: reduce ? 0 : 0.85 }} transition={{ duration: 2.4, delay: 0.5, ease: EASE }} />
+
+      {!reduce && (
+        <>
+          <motion.div className="light-orbs" aria-hidden="true">
+            <motion.div className="light-orbs__a" style={{ y: lightShiftFast, x: lightSway }} />
+            <motion.div className="light-orbs__b" style={{ y: lightShiftSlow }} />
+            <motion.div className="light-orbs__c" style={{ y: useTransform(scrollYProgress, [0, 1], [0, 220]) }} />
+          </motion.div>
+          <motion.div className="light-sheen" aria-hidden="true" style={{ opacity: lightSheenOpacity, y: lightSheenY }} />
+        </>
+      )}
 
       <motion.header className="header" initial={{ y: -40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.2, ease: EASE }}>
         <div className="container header__inner">

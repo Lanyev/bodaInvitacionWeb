@@ -275,8 +275,14 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .music-player__meta { display: inline-flex; overflow: hidden; flex-direction: column; line-height: 1.1; white-space: nowrap; }
 .music-player strong { display: block; color: var(--color-text); font-family: var(--display); font-size: 1rem; font-weight: 500; }
 .music-player small { color: var(--color-muted); font-size: .65rem; }
-.shimmer { position: fixed; z-index: 5; inset: 0; pointer-events: none; background: radial-gradient(600px circle at 20% 30%, color-mix(in srgb, var(--color-accent) 30%, transparent), transparent 60%), radial-gradient(800px circle at 80% 70%, color-mix(in srgb, var(--color-secondary) 18%, transparent), transparent 60%); opacity: 0; transition: opacity 1.2s ease; }
+.shimmer { position: fixed; z-index: 5; inset: 0; pointer-events: none; background: radial-gradient(600px circle at 20% 30%, color-mix(in srgb, var(--color-accent) 30%, transparent), transparent 60%), radial-gradient(800px circle at 80% 70%, color-mix(in srgb, var(--color-secondary) 18%, transparent), transparent 60%); opacity: 0; transition: opacity 1.2s ease; will-change: transform, opacity; }
 .shimmer--on { opacity: 1; }
+.light-orbs { position: fixed; z-index: 4; inset: 0; pointer-events: none; overflow: hidden; }
+.light-orbs__a, .light-orbs__b, .light-orbs__c { position: absolute; border-radius: 50%; will-change: transform; }
+.light-orbs__a { left: -14%; top: 6%; width: clamp(420px, 58vw, 760px); height: clamp(420px, 58vw, 760px); background: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--color-primary) 34%, transparent), color-mix(in srgb, var(--color-primary) 12%, transparent) 38%, transparent 72%); filter: blur(36px); opacity: .5; }
+.light-orbs__b { right: -16%; top: 44%; width: clamp(520px, 72vw, 920px); height: clamp(520px, 72vw, 920px); background: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--color-accent) 70%, transparent), color-mix(in srgb, var(--color-accent) 28%, transparent) 40%, transparent 74%); filter: blur(58px); opacity: .45; }
+.light-orbs__c { left: 32%; top: 70%; width: clamp(360px, 48vw, 600px); height: clamp(360px, 48vw, 600px); background: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--color-secondary) 38%, transparent), transparent 70%); filter: blur(48px); opacity: .35; }
+.light-sheen { position: fixed; z-index: 3; left: -20%; right: -20%; top: 22%; height: 44vh; pointer-events: none; background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--color-accent) 16%, transparent) 45%, color-mix(in srgb, var(--color-primary) 10%, transparent) 60%, transparent 100%); filter: blur(34px); will-change: transform, opacity; }
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s ease, transform 1s ease; }
 .reveal--in { opacity: 1; transform: translateY(0); }
 .reveal--soft { transform: translateY(0); }
