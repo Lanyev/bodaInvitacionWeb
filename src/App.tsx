@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform, useReducedMotion, AnimatePresence, type Variants } from 'framer-motion'
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
-import { CalendarDays, CalendarPlus, ChevronLeft, ChevronRight, Clock3, Gift, MapPin, Menu, Music, Pause, X } from 'lucide-react'
+import { useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react'
+import { CalendarDays, CalendarPlus, ChevronLeft, ChevronRight, Clock3, Gift, MapPin, Menu, MessageCircle, Music, Pause, X } from 'lucide-react'
 import { wedding } from './data/wedding'
 import { applyPalette, defaultPalette, palettes, type Palette } from './data/palettes'
 import PaletteSwitcher from './components/PaletteSwitcher'
@@ -22,15 +22,15 @@ const calendarEvents: Record<'ceremony' | 'reception', CalendarEvent> = {
     id: 'ceremonia',
     title: `${wedding.couple.partnerOne} & ${wedding.couple.partnerTwo} · Ceremonia`,
     start: '2026-10-16T21:00:00-06:00',
-    end: '2026-10-16T21:30:00-06:00',
+    end: '2026-10-17T02:00:00-06:00',
     description: `Ceremonia de boda de ${wedding.couple.partnerOne} y ${wedding.couple.partnerTwo}.`,
   },
   reception: {
-    id: 'recepcion',
-    title: `${wedding.couple.partnerOne} & ${wedding.couple.partnerTwo} · Recepción`,
-    start: '2026-10-16T21:45:00-06:00',
-    end: '2026-10-17T02:00:00-06:00',
-    description: `Cóctel de bienvenida, cena y celebración de ${wedding.couple.partnerOne} y ${wedding.couple.partnerTwo}.`,
+    id: 'cena',
+    title: `${wedding.couple.partnerOne} & ${wedding.couple.partnerTwo} · Cena`,
+    start: '2026-10-16T20:00:00-06:00',
+    end: '2026-10-16T21:00:00-06:00',
+    description: `Cena de boda de ${wedding.couple.partnerOne} y ${wedding.couple.partnerTwo}.`,
   },
 }
 
@@ -135,6 +135,7 @@ function useScrolledPast(threshold: number): boolean {
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [lightbox, setLightbox] = useState<number | null>(null)
+  const [rsvpSubmitted, setRsvpSubmitted] = useState(false)
   const [musicPlaying, setMusicPlaying] = useState(false)
   const [palette, setPalette] = useState<Palette>(() => {
     if (typeof window === 'undefined') return defaultPalette
@@ -174,6 +175,26 @@ function App() {
   }
 
   const galleryItem = lightbox === null ? null : wedding.gallery[lightbox]
+
+  const handleRsvpSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+    const name = String(formData.get('name') ?? '').trim()
+    const attendance = String(formData.get('attendance') ?? 'yes')
+    const guests = String(formData.get('guests') ?? '2')
+    const message = String(formData.get('message') ?? '').trim()
+    const attendanceLabel = attendance === 'yes' ? 'Sí, ahí estaremos' : 'No podremos acompañarlos'
+    const lines = [
+      wedding.rsvp.message,
+      `Nombre: ${name || '—'}`,
+      `Confirmación: ${attendanceLabel}`,
+      `Número de invitados: ${guests}`,
+      message ? `Mensaje: ${message}` : '',
+    ].filter(Boolean)
+    const url = `https://wa.me/${wedding.rsvp.whatsapp}?text=${encodeURIComponent(lines.join('\n'))}`
+    setRsvpSubmitted(true)
+    window.open(url, '_blank', 'noopener,noreferrer')
+  }
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -352,9 +373,28 @@ function App() {
               <motion.p className="section-copy" variants={fadeUp}>{wedding.event.dateLabel}</motion.p>
               <motion.div className="event-grid" variants={stagger}>
                 <motion.article className="event-card" variants={fadeUp} whileHover={reduce ? undefined : { y: -6 }}>
+                  <Clock3 className="event-card__icon" aria-hidden="true" />
+                  <h3>{wedding.event.reception}</h3>
+                  <p className="event-card__details">{wedding.event.timeWindow}<br />{wedding.event.venue}<br />{wedding.event.address}</p>
+                  <div className="event-card__actions">
+                    <motion.a
+                      className="button event-card__action--calendar"
+                      href={getGoogleCalendarUrl(calendarEvents.reception)}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Añadir Cena a Google Calendar"
+                      whileHover={reduce ? undefined : { y: -2 }}
+                      whileTap={reduce ? undefined : { scale: 0.98 }}
+                    >
+                      <CalendarPlus size={15} aria-hidden="true" />
+                      <span>Añadir a Google Calendar</span>
+                    </motion.a>
+                  </div>
+                </motion.article>
+                <motion.article className="event-card" variants={fadeUp} whileHover={reduce ? undefined : { y: -6 }}>
                   <CalendarDays className="event-card__icon" aria-hidden="true" />
                   <h3>{wedding.event.ceremony}</h3>
-                  <p className="event-card__details">21:00 horas<br />{wedding.event.venue}<br />{wedding.event.address}</p>
+                  <p className="event-card__details">21:00 a 02:00 hrs<br />{wedding.event.venue}<br />{wedding.event.address}</p>
                   <div className="event-card__actions">
                     <motion.a
                       className="button event-card__action--calendar"
@@ -370,36 +410,13 @@ function App() {
                     </motion.a>
                   </div>
                 </motion.article>
-                <motion.article className="event-card" variants={fadeUp} whileHover={reduce ? undefined : { y: -6 }}>
-                  <Clock3 className="event-card__icon" aria-hidden="true" />
-                  <h3>{wedding.event.reception}</h3>
-                  <p className="event-card__details">{wedding.event.timeWindow}<br />Cóctel de bienvenida y cena</p>
-                  <div className="event-card__dress-code">
-                    <span>Código de Vestimenta</span>
-                    <strong>{wedding.event.dressCode}</strong>
-                  </div>
-                  <div className="event-card__actions">
-                    <motion.a
-                      className="button event-card__action--calendar"
-                      href={getGoogleCalendarUrl(calendarEvents.reception)}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label="Añadir Recepción a Google Calendar"
-                      whileHover={reduce ? undefined : { y: -2 }}
-                      whileTap={reduce ? undefined : { scale: 0.98 }}
-                    >
-                      <CalendarPlus size={15} aria-hidden="true" />
-                      <span>Añadir a Google Calendar</span>
-                    </motion.a>
-                  </div>
-                </motion.article>
               </motion.div>
               <motion.article className="gift-card" variants={fadeUp}>
                 <span className="gift-card__icon" aria-hidden="true"><Gift size={23} /></span>
                 <div>
-                  <span className="eyebrow">Próximamente</span>
-                  <h3>Mesa de Regalos</h3>
-                  <p>Muy pronto encontrarás aquí los detalles para acompañarnos con un obsequio.</p>
+                  <span className="eyebrow">Sugerencia</span>
+                  <h3>Buzón de dinero</h3>
+                  <p>Si deseas tener un detalle con nosotros, tendremos un buzón disponible durante la recepción.</p>
                 </div>
               </motion.article>
             </div>
@@ -446,6 +463,59 @@ function App() {
                   </motion.button>
                 ))}
               </motion.div>
+            </div>
+          </motion.section>
+        )}
+
+        {wedding.sections.rsvp && (
+          <motion.section id="rsvp" className="section section--paper rsvp" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={stagger}>
+            <div className="container">
+              <motion.div variants={fadeUp}><SectionTitle eyebrow="¿Nos acompañas?">Confirma tu asistencia</SectionTitle></motion.div>
+              <motion.p className="section-copy rsvp__lead" variants={fadeUp}>Ayúdanos a preparar cada detalle confirmando tu asistencia vía WhatsApp.</motion.p>
+              <motion.form className="form" onSubmit={handleRsvpSubmit} variants={fadeUp}>
+                <label>
+                  <span>Nombre</span>
+                  <input required name="name" placeholder="Tu nombre completo" />
+                </label>
+                <label>
+                  <span>Asistencia</span>
+                  <select name="attendance" defaultValue="yes">
+                    <option value="yes">Sí, ahí estaremos</option>
+                    <option value="no">No podremos acompañarlos</option>
+                  </select>
+                </label>
+                <label>
+                  <span>Número de invitados</span>
+                  <select name="guests" defaultValue="2">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                  </select>
+                </label>
+                <label>
+                  <span>Mensaje</span>
+                  <textarea name="message" rows={3} placeholder="Un mensaje para los novios (opcional)" />
+                </label>
+                <div className="form__contact">
+                  <span className="form__contact-label">Se enviará a</span>
+                  <a className="form__contact-value" href={`https://wa.me/${wedding.rsvp.whatsapp}`} target="_blank" rel="noreferrer">
+                    <MessageCircle size={16} aria-hidden="true" />
+                    Fabian
+                  </a>
+                </div>
+                <AnimatePresence mode="wait" initial={false}>
+                  {rsvpSubmitted ? (
+                    <motion.p key="thanks" className="form__message" role="status" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+                      ¡Gracias! Abriendo WhatsApp para enviar tu confirmación…
+                    </motion.p>
+                  ) : (
+                    <motion.button key="submit" className="button" type="submit" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} whileHover={reduce ? undefined : { y: -2 }} whileTap={reduce ? undefined : { scale: 0.98 }}>
+                      Enviar confirmación
+                    </motion.button>
+                  )}
+                </AnimatePresence>
+              </motion.form>
             </div>
           </motion.section>
         )}
