@@ -143,6 +143,7 @@ function App() {
     return palettes.find((item) => item.id === stored) ?? defaultPalette
   })
   const audioRef = useRef<HTMLAudioElement>(null)
+  const fadeRef = useRef<number | null>(null)
   const reduce = useReducedMotion()
   const compact = useScrolledPast(420)
   const { scrollYProgress } = useScroll()
@@ -153,15 +154,43 @@ function App() {
     () => wedding.nav.filter((item) => !item.section || wedding.sections[item.section]),
     [],
   )
+  const fadeInAudio = (audio: HTMLAudioElement) => {
+    if (fadeRef.current !== null) {
+      window.cancelAnimationFrame(fadeRef.current)
+      fadeRef.current = null
+    }
+    audio.volume = 0
+    const start = performance.now()
+    const duration = 4000
+    const step = (now: number) => {
+      const progress = Math.min(1, (now - start) / duration)
+      audio.volume = progress
+      if (progress < 1) {
+        fadeRef.current = window.requestAnimationFrame(step)
+      } else {
+        fadeRef.current = null
+      }
+    }
+    fadeRef.current = window.requestAnimationFrame(step)
+  }
+
   const toggleMusic = async () => {
-    if (!audioRef.current) return
+    const audio = audioRef.current
+    if (!audio) return
     if (musicPlaying) {
-      audioRef.current.pause()
+      audio.pause()
+      audio.volume = 0
       setMusicPlaying(false)
       return
     }
     try {
-      await audioRef.current.play()
+      audio.volume = 0
+      const onPlaying = () => {
+        audio.removeEventListener('playing', onPlaying)
+        fadeInAudio(audio)
+      }
+      audio.addEventListener('playing', onPlaying)
+      await audio.play()
       setMusicPlaying(true)
     } catch {
       setMusicPlaying(false)
