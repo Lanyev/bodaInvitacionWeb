@@ -490,7 +490,7 @@ function App() {
         )}
 
         {wedding.sections.gallery && (
-          <motion.section id="galeria" className="section section--white" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} variants={stagger}>
+          <motion.section id="galeria" className="section section--green" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} variants={stagger}>
             <div className="container">
               <motion.div variants={fadeUp}><SectionTitle eyebrow="Instantes para recordar">Galería</SectionTitle></motion.div>
               <motion.div className="gallery" variants={stagger}>

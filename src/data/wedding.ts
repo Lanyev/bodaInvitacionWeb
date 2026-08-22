@@ -78,8 +78,8 @@ export const wedding: WeddingConfig = {
     { href: '#bienvenida', label: 'Bienvenida', mobileLabel: 'Inicio', section: 'bienvenida' },
     { href: '#historia', label: 'Historia', section: 'story' },
     { href: '#evento', label: 'Evento', section: 'events' },
-    { href: '#rsvp', label: 'Confirmación', section: 'rsvp' },
     { href: '#galeria', label: 'Galería', section: 'gallery' },
+    { href: '#rsvp', label: 'Confirmación', section: 'rsvp' },
     { href: '#ubicacion', label: 'Ubicación', section: 'location' },
   ],
   credits: {
