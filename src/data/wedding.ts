@@ -67,8 +67,8 @@ export const wedding: WeddingConfig = {
     { src: `${base}images/gallery-02.jpg`, alt: 'Novios con globos junto a la alberca', size: 'standard' },
     { src: `${base}images/gallery-03.jpg`, alt: 'Manos de una pareja', size: 'standard' },
     { src: `${base}images/gallery-04.jpg`, alt: 'Pareja en un entorno campestre', size: 'standard' },
-    { src: `${base}images/gallery-new01.jpeg`, alt: 'Momento especial de la pareja', size: 'standard' },
-    { src: `${base}images/gallery-new02.jpeg`, alt: 'Momento especial de la pareja', size: 'standard' },
+    { src: `${base}images/gallery-new01.jpg`, alt: 'Momento especial de la pareja', size: 'standard' },
+    { src: `${base}images/gallery-new02.jpg`, alt: 'Momento especial de la pareja', size: 'standard' },
   ],
   rsvp: {
     whatsapp: '6566996698',
