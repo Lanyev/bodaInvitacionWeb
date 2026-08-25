@@ -368,30 +368,37 @@ function App() {
         </motion.section>
 
         {wedding.sections.story && (
-          <motion.section id="historia" className="section section--paper" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={stagger}>
-            <div className="container story">
-              <div className="story__text">
-                <motion.div variants={fadeUp}><SectionTitle eyebrow={wedding.story.eyebrow}>{wedding.story.title}</SectionTitle></motion.div>
-                <motion.figure className="story__rings" variants={fadeUp}>
-                  <img src={wedding.story.ringsImage} alt="Argollas de matrimonio" loading="lazy" />
-                </motion.figure>
-                <motion.div className="story__rule" variants={fadeUp} />
-                <motion.div className="parents" variants={fadeUp}>
-                  <span className="parents__eyebrow">Con la bendición de Dios y nuestros padres</span>
-                  <ul className="parents__list">
-                    <li><span>Mamá de la novia</span><strong>{wedding.parents.motherOfBride}</strong></li>
-                    <li><span>Papá del novio</span><strong>{wedding.parents.fatherOfGroom}</strong></li>
-                    <li><span>Mamá del novio</span><strong>{wedding.parents.motherOfGroom}</strong></li>
-                  </ul>
-                </motion.div>
-                {wedding.story.paragraphs.map((paragraph) => <motion.p className="section-copy" key={paragraph} variants={fadeUp}>{paragraph}</motion.p>)}
-              </div>
+          <motion.section id="historia" className="split" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={stagger}>
+            <motion.div
+              className="split__image"
+              role="img"
+              aria-label="Retrato de la pareja"
+              style={{ '--split-bg': `url('${wedding.story.image}')` } as React.CSSProperties}
+              variants={softFade}
+            />
+            <div className="split__content">
+              <motion.div variants={fadeUp}>
+                <SectionTitle eyebrow={wedding.story.eyebrow}>{wedding.story.title}</SectionTitle>
+              </motion.div>
+              <motion.div className="story__rule" variants={fadeUp} />
+              <motion.div className="parents" variants={fadeUp}>
+                <span className="parents__eyebrow">Con la bendición de Dios y nuestros padres</span>
+                <ul className="parents__list">
+                  <li><span>Mamá de la novia</span><strong>{wedding.parents.motherOfBride}</strong></li>
+                  <li><span>Papá del novio</span><strong>{wedding.parents.fatherOfGroom}</strong></li>
+                  <li><span>Mamá del novio</span><strong>{wedding.parents.motherOfGroom}</strong></li>
+                </ul>
+              </motion.div>
+              {wedding.story.paragraphs.map((paragraph) => (
+                <motion.p className="section-copy" key={paragraph} variants={fadeUp}>{paragraph}</motion.p>
+              ))}
             </div>
           </motion.section>
         )}
 
         {wedding.sections.countdown && (
           <motion.section
+            id="contador"
             className="section countdown"
             style={{ '--countdown-overlay': `url('${import.meta.env.BASE_URL}images/herradura.png')` } as React.CSSProperties}
             initial="hidden"
@@ -413,10 +420,10 @@ function App() {
         )}
 
         {wedding.sections.events && (
-          <motion.section id="evento" className="section section--white" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={stagger}>
-            <div className="container">
+          <motion.section id="evento" className="split split--reverse" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={stagger}>
+            <div className="split__content">
               <motion.div variants={fadeUp}><SectionTitle eyebrow="Celebremos juntos">El gran día</SectionTitle></motion.div>
-              <motion.p className="section-copy" variants={fadeUp}>{wedding.event.dateLabel}</motion.p>
+              <motion.h3 variants={fadeUp}>{wedding.event.dateLabel}</motion.h3>
               <motion.div className="event-grid" variants={stagger}>
                 <motion.article className="event-card" variants={fadeUp} whileHover={reduce ? undefined : { y: -6 }}>
                   <Clock3 className="event-card__icon" aria-hidden="true" />
@@ -466,6 +473,13 @@ function App() {
                 </div>
               </motion.article>
             </div>
+            <motion.div
+              className="split__image"
+              role="img"
+              aria-label="Momento especial del gran día"
+              style={{ '--split-bg': `url('${wedding.event.image}')` } as React.CSSProperties}
+              variants={softFade}
+            />
           </motion.section>
         )}
 
@@ -484,29 +498,6 @@ function App() {
                       <p>{item.description}</p>
                     </div>
                   </motion.div>
-                ))}
-              </motion.div>
-            </div>
-          </motion.section>
-        )}
-
-        {wedding.sections.gallery && (
-          <motion.section id="galeria" className="section section--green" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} variants={stagger}>
-            <div className="container">
-              <motion.div variants={fadeUp}><SectionTitle eyebrow="Instantes para recordar">Galería</SectionTitle></motion.div>
-              <motion.div className="gallery" variants={stagger}>
-                {wedding.gallery.map((image, index) => (
-                  <motion.button
-                    className={`gallery__item gallery__item--${image.size}`}
-                    key={image.src}
-                    onClick={() => setLightbox(index)}
-                    aria-label={`Abrir fotografía ${index + 1}`}
-                    variants={fadeUp}
-                    whileHover={reduce ? undefined : { scale: 1.02 }}
-                    whileTap={reduce ? undefined : { scale: 0.98 }}
-                  >
-                    <img src={image.src} alt={image.alt} loading="lazy" />
-                  </motion.button>
                 ))}
               </motion.div>
             </div>
@@ -589,6 +580,29 @@ function App() {
             </div>
           </motion.section>
         )}
+
+        {wedding.sections.gallery && (
+          <motion.section id="galeria" className="section section--paper" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} variants={stagger}>
+            <div className="container">
+              <motion.div variants={fadeUp}><SectionTitle eyebrow="Instantes para recordar">Galería</SectionTitle></motion.div>
+              <motion.div className="gallery" variants={stagger}>
+                {wedding.gallery.map((image, index) => (
+                  <motion.button
+                    className={`gallery__item gallery__item--${image.size}`}
+                    key={image.src}
+                    onClick={() => setLightbox(index)}
+                    aria-label={`Abrir fotografía ${index + 1}`}
+                    variants={fadeUp}
+                    whileHover={reduce ? undefined : { scale: 1.02 }}
+                    whileTap={reduce ? undefined : { scale: 0.98 }}
+                  >
+                    <img src={image.src} alt={image.alt} loading="lazy" />
+                  </motion.button>
+                ))}
+              </motion.div>
+            </div>
+          </motion.section>
+        )}
       </main>
 
       {wedding.music.enabled && (
@@ -630,6 +644,7 @@ function App() {
       <PaletteSwitcher current={palette} onSelect={handlePaletteSelect} />
 
       <motion.footer
+        id="final"
         className="footer"
         initial="hidden"
         whileInView="show"

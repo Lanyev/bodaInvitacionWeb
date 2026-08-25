@@ -2,7 +2,7 @@ const base = import.meta.env.BASE_URL
 
 export type WeddingConfig = {
   couple: { partnerOne: string; partnerTwo: string; monogram: string; tagline: string }
-  event: { dateLabel: string; isoDate: string; ceremony: string; reception: string; venue: string; address: string; mapsUrl: string; dressCode: string; timeWindow: string }
+  event: { dateLabel: string; isoDate: string; ceremony: string; reception: string; venue: string; address: string; mapsUrl: string; dressCode: string; timeWindow: string; image: string }
   story: { eyebrow: string; title: string; paragraphs: string[]; image: string; ringsImage: string }
   parents: { motherOfBride: string; fatherOfGroom: string; motherOfGroom: string }
   hero: { image: string }
@@ -33,6 +33,7 @@ export const wedding: WeddingConfig = {
     mapsUrl: 'https://maps.google.com/?q=Ruanda+7658+Campestre+Virreyes',
     dressCode: 'Semi Formal',
     timeWindow: '20:00 a 21:00 hrs',
+    image: `${base}images/5.jpg`,
   },
   story: {
     eyebrow: 'Con mucha alegría',
@@ -41,7 +42,7 @@ export const wedding: WeddingConfig = {
       'Después de tantos caminos compartidos, queremos celebrar el comienzo de una nueva etapa rodeados de las personas que más queremos.',
       'Tu presencia hará que este día sea todavía más especial.',
     ],
-    image: `${base}images/story.jpg`,
+    image: `${base}images/1.jpg`,
     ringsImage: `${base}images/wedding-rings.jpg`,
   },
   parents: {
@@ -50,10 +51,10 @@ export const wedding: WeddingConfig = {
     motherOfGroom: 'Cindy Mireles',
   },
   hero: {
-    image: `${base}images/main-photo-01.jpg`,
+    image: `${base}images/3.jpg`,
   },
   location: {
-    image: `${base}images/venue.jpg`,
+    image: `${base}images/2.jpg`,
   },
   music: {
     enabled: true,
@@ -63,24 +64,29 @@ export const wedding: WeddingConfig = {
   },
   program: [],
   gallery: [
-    { src: `${base}images/gallery-01.jpg`, alt: 'Pareja caminando en un paisaje natural', size: 'standard' },
-    { src: `${base}images/gallery-02.jpg`, alt: 'Novios con globos junto a la alberca', size: 'standard' },
-    { src: `${base}images/gallery-03.jpg`, alt: 'Manos de una pareja', size: 'standard' },
-    { src: `${base}images/gallery-04.jpg`, alt: 'Pareja en un entorno campestre', size: 'standard' },
-    { src: `${base}images/gallery-new01.jpg`, alt: 'Momento especial de la pareja', size: 'standard' },
-    { src: `${base}images/gallery-new02.jpg`, alt: 'Momento especial de la pareja', size: 'standard' },
+    { src: `${base}images/1.jpg`, alt: 'Pareja en un paisaje natural', size: 'standard' },
+    { src: `${base}images/2.jpg`, alt: 'Novios celebrando en un lugar especial', size: 'standard' },
+    { src: `${base}images/3.jpg`, alt: 'Retrato principal de la pareja', size: 'standard' },
+    { src: `${base}images/4.jpg`, alt: 'Momento especial de la pareja', size: 'standard' },
+    { src: `${base}images/5.jpg`, alt: 'Mirada cómplice entre los novios', size: 'standard' },
+    { src: `${base}images/6.jpg`, alt: 'Detalle romántico de la pareja', size: 'standard' },
+    { src: `${base}images/7.jpg`, alt: 'Celebración de la pareja', size: 'standard' },
+    { src: `${base}images/8.jpg`, alt: 'Instante memorable de los novios', size: 'standard' },
   ],
   rsvp: {
     whatsapp: '6566996698',
     message: '¡Hola! Confirmo mi asistencia a la boda de Fabian y Kimberly.',
   },
   nav: [
-    { href: '#bienvenida', label: 'Bienvenida', mobileLabel: 'Inicio', section: 'bienvenida' },
+    { href: '#inicio', label: 'Inicio' },
+    { href: '#bienvenida', label: 'Bienvenida', section: 'bienvenida' },
     { href: '#historia', label: 'Historia', section: 'story' },
+    { href: '#contador', label: 'Contador', section: 'countdown' },
     { href: '#evento', label: 'Evento', section: 'events' },
-    { href: '#galeria', label: 'Galería', section: 'gallery' },
     { href: '#rsvp', label: 'Confirmación', section: 'rsvp' },
     { href: '#ubicacion', label: 'Ubicación', section: 'location' },
+    { href: '#galeria', label: 'Galería', section: 'gallery' },
+    { href: '#final', label: 'Final' },
   ],
   credits: {
     author: 'Alan Yeverino',
