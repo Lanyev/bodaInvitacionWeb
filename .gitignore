@@ -20,5 +20,11 @@ referencia/
 # Images not currently referenced by the app (kept locally as backup, do not deploy)
 unused-images/
 
+# Local archive of removed files (kept out of the repo)
+_archive/
+
+# Playwright MCP session artifacts
+.playwright-mcp/
+
 # OS
 Thumbs.db
