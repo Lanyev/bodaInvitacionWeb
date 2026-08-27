@@ -1,11 +1,11 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// For GitHub Pages, set `base` to '/<repo-name>/'.
-// If hosting on a custom domain or at the root of a user/org page, set to '/'.
+// Firebase Hosting serves from the domain root.
+// If you switch back to GitHub Pages, change `base` to '/<repo-name>/'.
 export default defineConfig({
   plugins: [react()],
-  base: '/bodaInvitacionWeb/',
+  base: '/',
   server: {
     host: true,
     watch: {
