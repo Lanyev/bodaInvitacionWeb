@@ -144,6 +144,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .gift-card h3 { margin: 5px 0 3px; color: var(--color-card-text); font-family: var(--display); font-size: 1.7rem; font-weight: 500; }
 .gift-card p { margin: 0; color: var(--color-muted); font-size: .78rem; line-height: 1.55; }
 
+.info-card { display: flex; max-width: 760px; align-items: center; gap: 22px; margin: 22px auto 0; padding: 24px 30px; border: 1px solid var(--color-line); background: var(--color-card); color: var(--color-card-text); text-align: left; box-shadow: 0 18px 50px color-mix(in srgb, var(--color-primary) 12%, transparent); }
+.info-card__icon { display: inline-flex; width: 52px; height: 52px; flex: 0 0 52px; align-items: center; justify-content: center; border-radius: 50%; background: var(--color-accent); color: var(--color-accent-text); }
+.info-card h3 { margin: 5px 0 3px; color: var(--color-card-text); font-family: var(--display); font-size: 1.7rem; font-weight: 500; text-transform: capitalize; letter-spacing: .04em; }
+.info-card p { margin: 0; color: var(--color-muted); font-size: .78rem; line-height: 1.55; }
+.info-card .eyebrow { color: var(--color-primary); }
+
 .rsvp { text-align: center; }
 .rsvp .section-copy { margin: 0 auto 32px; }
 .rsvp__lead { max-width: 560px; }
@@ -221,6 +227,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .split .gift-card h3 { color: var(--color-card-text); }
 .split .gift-card .eyebrow { color: var(--color-primary); }
 .split .gift-card p { color: var(--color-text); opacity: .85; }
+.split .info-card { background: var(--color-card); border-color: color-mix(in srgb, var(--color-on-dark) 30%, transparent); box-shadow: 0 18px 50px color-mix(in srgb, var(--color-scrim) 28%, transparent); color: var(--color-card-text); }
+.split .info-card h3 { color: var(--color-card-text); }
+.split .info-card .eyebrow { color: var(--color-primary); }
+.split .info-card p { color: var(--color-text); opacity: .85; }
 
 .footer { padding: 90px 20px; background: var(--color-secondary); color: var(--color-on-dark); text-align: center; }
 .footer__names { color: var(--color-on-dark); font-family: var(--script); font-size: clamp(3rem, 8vw, 6rem); font-style: italic; }

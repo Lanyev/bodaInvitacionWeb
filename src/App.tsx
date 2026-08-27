@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform, useReducedMotion, AnimatePresence, type Variants } from 'framer-motion'
 import { useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react'
-import { CalendarDays, CalendarPlus, ChevronLeft, ChevronRight, Clock3, Gift, MapPin, Menu, MessageCircle, Music, Pause, X } from 'lucide-react'
+import { CalendarDays, CalendarPlus, ChevronLeft, ChevronRight, Clock3, Gift, MapPin, Menu, MessageCircle, Music, Pause, Sparkles, X } from 'lucide-react'
 import { wedding } from './data/wedding'
 import { applyPalette, defaultPalette, palettes, type Palette } from './data/palettes'
 import PaletteSwitcher from './components/PaletteSwitcher'
@@ -464,6 +464,16 @@ function App() {
                   </div>
                 </motion.article>
               </motion.div>
+              {wedding.event.dressCode && (
+                <motion.article className="info-card info-card--dress" variants={fadeUp}>
+                  <span className="info-card__icon" aria-hidden="true"><Sparkles size={23} /></span>
+                  <div>
+                    <span className="eyebrow">Código de vestimenta</span>
+                    <h3>{wedding.event.dressCode}</h3>
+                    <p>Te recomendamos vestir elegante pero cómodo, pensado para disfrutar la velada al aire libre.</p>
+                  </div>
+                </motion.article>
+              )}
               <motion.article className="gift-card" variants={fadeUp}>
                 <span className="gift-card__icon" aria-hidden="true"><Gift size={23} /></span>
                 <div>
