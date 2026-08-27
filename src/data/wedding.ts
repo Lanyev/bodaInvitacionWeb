@@ -93,7 +93,8 @@ export const wedding: WeddingConfig = {
     role: 'Diseño y desarrollo',
     email: 'Lanyev@gmail.com',
     copyrightYear: 2026,
-    legalNotice: 'Esta obra se encuentra en proceso de desarrollo. Queda prohibida la reproducción total o parcial, por cualquier medio, sin autorización expresa y por escrito del autor.',
+    legalNotice:
+      'Este sitio es una invitación personal de carácter privado. Los textos, fotografías, ilustraciones y elementos de diseño son propiedad de los novios y/o de sus respectivos autores y están protegidos por la legislación aplicable en materia de propiedad intelectual. Queda prohibida su reproducción total o parcial, distribución, comunicación pública o transformación por cualquier medio, sin autorización previa, expresa y por escrito. Este sitio no se encuentra indexado por motores de búsqueda y no está destinado a su difusión pública. El acceso está restringido a los invitados; si ha llegado hasta aquí de manera no intencionada, le rogamos que cierre la página y disculpe la molestia.',
   },
   sections: { bienvenida: true, story: true, countdown: true, events: true, program: false, gallery: true, location: true, rsvp: true },
 }

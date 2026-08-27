@@ -2,10 +2,8 @@ import { motion, useScroll, useTransform, useReducedMotion, AnimatePresence, typ
 import { useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { CalendarDays, CalendarPlus, ChevronLeft, ChevronRight, Clock3, Gift, MapPin, Menu, MessageCircle, Music, Pause, Sparkles, X } from 'lucide-react'
 import { wedding } from './data/wedding'
-import { applyPalette, defaultPalette, palettes, type Palette } from './data/palettes'
-import PaletteSwitcher from './components/PaletteSwitcher'
+import { applyPalette, defaultPalette } from './data/palettes'
 import './styles/theme.css'
-import './styles/palette-switcher.css'
 
 type Remaining = { days: number; hours: number; minutes: number; seconds: number }
 type CalendarEvent = { id: string; title: string; start: string; end: string; description: string }
@@ -138,11 +136,6 @@ function App() {
   const [lightbox, setLightbox] = useState<number | null>(null)
   const [rsvpSubmitted, setRsvpSubmitted] = useState(false)
   const [musicPlaying, setMusicPlaying] = useState(false)
-  const [palette, setPalette] = useState<Palette>(() => {
-    if (typeof window === 'undefined') return defaultPalette
-    const stored = window.localStorage.getItem('wedding-palette')
-    return palettes.find((item) => item.id === stored) ?? defaultPalette
-  })
   const audioRef = useRef<HTMLAudioElement>(null)
   const fadeRef = useRef<number | null>(null)
   const reduce = useReducedMotion()
@@ -252,15 +245,8 @@ function App() {
   }, [menuOpen, lightbox])
 
   useEffect(() => {
-    applyPalette(palette)
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem('wedding-palette', palette.id)
-    }
-  }, [palette])
-
-  const handlePaletteSelect = (next: Palette) => {
-    setPalette(next)
-  }
+    applyPalette(defaultPalette)
+  }, [])
 
   return (
     <motion.div className="page" initial={reduce ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2, ease: EASE }}>
@@ -650,8 +636,6 @@ function App() {
           </AnimatePresence>
         </motion.div>
       )}
-
-      <PaletteSwitcher current={palette} onSelect={handlePaletteSelect} />
 
       <motion.footer
         id="final"
