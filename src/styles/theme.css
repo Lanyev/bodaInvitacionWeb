@@ -205,7 +205,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 
 .split { display: grid; min-height: 480px; grid-template-columns: 1fr 1fr; grid-template-areas: "image content"; background: var(--color-secondary); color: var(--color-on-dark); }
 .split__image { grid-area: image; background: var(--split-bg, none) center 38% / cover; min-height: 360px; }
-.split__content { grid-area: content; display: grid; place-content: center; gap: 18px; padding: 60px; }
+.split__content { grid-area: content; display: flex; flex-direction: column; justify-content: center; gap: 18px; padding: 60px; }
+.split__content > .event-grid,
+.split__content > h3,
+.split__content > .section-title { width: 100%; }
 .split__content .section-title { color: var(--color-on-dark); }
 .split__content .eyebrow { color: var(--color-on-dark-muted); }
 .split__content .section-copy { max-width: 520px; color: var(--color-on-dark-muted); line-height: 1.7; }
